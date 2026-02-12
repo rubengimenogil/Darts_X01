@@ -127,7 +127,7 @@ class Dardo:
     """Representa un único lanzamiento de dardo."""
 
     # Atributos:
-    def __init__(self, numero: int, multiplicador: int = 1):
+    def __init__(self, numero: int, multiplicador: int = 1) -> None:
 
         # Validar número y multiplicador
         if not (1 <= numero <= 20):
@@ -150,14 +150,14 @@ class Dardo:
         return self.numero * self.multiplicador
 
     # Representación legible del dardo
-    def __repr__(self):
+    def __repr__(self) -> str:
 
         # Es útil tener una representación legible del dardo que muestre su número y multiplicador de forma clara (por ejemplo, "S20" para un simple 20, "D5" para un doble 5, "T3" para un triple 3). Esto facilita la comprensión de los dardos lanzados en las rondas.
         tipo = {1: 'S', 2: 'D', 3: 'T'}[self.multiplicador]
         return f"Dardo({tipo}{self.numero})"
     
     # Para imprimir el dardo de forma legible
-    def __str__(self):
+    def __str__(self) -> str:
 
         # Es útil tener una representación legible del dardo que muestre su número y multiplicador de forma clara (por ejemplo, "S20" para un simple 20, "D5" para un doble 5, "T3" para un triple 3). Esto facilita la comprensión de los dardos lanzados en las rondas.
         tipo = {1: 'S', 2: 'D', 3: 'T'}[self.multiplicador]
@@ -176,12 +176,12 @@ class Ronda:
     """Una ronda puede contener hasta 3 dardos."""
 
     # Atributos:
-    def __init__(self):
+    def __init__(self) -> None:
         # Inicializar la lista de dardos vacía
         self.dardos = []
 
     # Método para añadir un dardo a la ronda
-    def añadir_dardo(self, dardo: Dardo):
+    def añadir_dardo(self, dardo: Dardo) -> None:
         # Validar que el objeto es un Dardo y que no se excede el límite de 3 dardos por ronda
         if not isinstance(dardo, Dardo):
             raise ValueError("Sólo se pueden añadir objetos de tipo Dardo a la ronda")
@@ -196,11 +196,11 @@ class Ronda:
         return sum(d.puntos() for d in self.dardos)
 
     # Representación legible de la ronda
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Ronda({self.dardos})"
     
     # Para imprimir la ronda de forma legible
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Ronda con dardos: {', '.join(str(d) for d in self.dardos)} (Total puntos: {self.puntos_totales()})"
 
 
@@ -360,7 +360,7 @@ class Partida:
 class GameRunner:
 
     # Atributos:
-    def __init__(self, jugadores, tipo=121):
+    def __init__(self, jugadores, tipo=121) -> None:
         # Validar tipo de partida y lista de jugadores
         if tipo not in Partida.TIPOS_VALIDOS:
             raise ValueError(f"Tipo de partida inválido: {tipo}")
@@ -371,7 +371,7 @@ class GameRunner:
         self.partida = Partida(jugadores, tipo=tipo)
 
     # Método para ejecutar la simulación de la partida y mostrar los resultados
-    def run(self, max_rondas=10, semilla=None, verbose: bool = False):
+    def run(self, max_rondas=10, semilla=None, verbose: bool = False) -> None:
         # Simula la partida utilizando el método simular de la clase Partida, pasando el número máximo de rondas y la semilla para la generación de números aleatorios. Luego, imprime el número de rondas jugadas y el ganador de la partida. Esto permite ejecutar la simulación de manera sencilla y ver los resultados de forma clara.
         rondas, ganador = self.partida.simular(max_rondas=max_rondas, semilla=semilla)
         print(f"Rondas: {rondas}, Ganador: {ganador}")
@@ -382,7 +382,7 @@ class GameRunner:
     # Input para pedir el tipo de partida al usuario
 
     @staticmethod
-    def pedir_tipo():
+    def pedir_tipo() -> int:
         # Solicita al usuario que ingrese el tipo de partida (121, 301, 501, 701, 901) y valida la entrada. Si la entrada no es válida, muestra un mensaje de error y vuelve a solicitar hasta que se ingrese un tipo válido. Esto asegura que el usuario seleccione un tipo de partida correcto para la simulación.
         while True:
             try:
@@ -397,7 +397,7 @@ class GameRunner:
     # Input para pedir el número máximo de rondas al usuario
 
     @staticmethod
-    def pedir_max_rondas():
+    def pedir_max_rondas() -> int:
         # Solicita al usuario que ingrese el número máximo de rondas para la simulación y valida que sea un número entero positivo. Si la entrada no es válida, muestra un mensaje de error y vuelve a solicitar hasta que se ingrese un número válido. Esto asegura que el usuario configure correctamente el número máximo de rondas para la simulación.
         while True:
             try:
@@ -413,7 +413,7 @@ class GameRunner:
 
     # Método principal para ejecutar el programa, que solicita al usuario el tipo de partida, el número máximo de rondas y los nombres de los jugadores, luego crea una instancia de GameRunner y ejecuta la simulación. Esto permite iniciar el programa de manera interactiva y configurar la partida según las preferencias del usuario.
 
-    def main(cls, semilla: int | None = 42):
+    def main(cls, semilla: int | None = 42) -> int:
     # Usamos `semilla=42` para llamar a `random.seed(semilla)` en la simulación.
     # Esto hace la simulación determinista y reproducible (útil para pruebas).
         tipo = cls.pedir_tipo()
